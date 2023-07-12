@@ -10,14 +10,14 @@ https://www.linkedin.com/posts/aliyu-bello-06b54721b_this-is-basic-web-applicati
 . Acess to tenor Gifs
 . Access to news using news api
 
-Technologies
+**Technologies**
 HTML5 CSS3 and Javascript
 Tenor Api and News Api
 
-contribution
-contribution are welcom if you find any issue or have any suggestion.
+**Contribution**
+contribution are welcome if you find any issue or have any suggestion.
 
-License
+**License**
 Feel free to use
 Author 
 Aliyu Bello
