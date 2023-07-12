@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<style>
+
+body{
+background-color:grey;
+margin:0;
+padding:0;
+
+}
+
+.nav-bar{
+list-style-type:none;
+margin:0;
+padding:0;
+background:#ffff;
+text-align:right;
+height:70px;
+
+}
+
+.nav-bar>li{
+
+padding:16px;
+display:inline;
+
+
+
+
+}
+#a{
+
+background:red;
+color:#ffff;
+border-radius:10px 0 10px 0;
+
+}
+
+#b{
+
+background:blue;
+color:#ffff;
+border-radius:10px 0 10px 0;
+
+}
+
+.container{
+margin:0 auto;
+text-align:center;
+width:500px;
+height:100px;
+background:#ffffff;
+margin-top:-60px;
+}
+
+form{
+margin-top:40px;
+text-align:center;
+
+
+}
+
+input[type="text"]{
+margin-top:30px;
+height:25px;
+border:none;
+background:grey;
+color:#ffffff;
+border-radius:2em 0em 0em 2em;
+
+}
+
+::placeholder{
+color:white;
+text-align:center;
+
+}
+input[type="button"]{
+
+height:25px;
+background:red;
+color:#ffffff;
+border:none;
+border-radius:0em 2em 2em 0em;
+
+}
+.api{
+margin-top:0px;
+float:left;
+width:160px;
+height:60px;
+
+
+}
+
+a{
+color:white;
+text-decoration:none;
+
+
+}
+
+#preview_gif{
+margin-top:100px;
+width:300px;
+height:200px;
+
+}
+
+.container2{
+margin:0 auto;
+width:300px;
+height:200px;
+
+}
+
+p{
+text-align:center;
+font-size:20px;
+color:#ffff;
+}
+</style>
+
+
+<script>
+
+// url Async requesting function
+function httpGetAsync(theUrl, callback)
+{
+    // create the request object
+    var xmlHttp = new XMLHttpRequest();
+
+    // set the state change callback to capture when the response comes in
+    xmlHttp.onreadystatechange = function()
+    {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        {
+            callback(xmlHttp.responseText);
+        }
+    }
+
+    // open as a GET call, pass in the url and set async = True
+    xmlHttp.open("GET", theUrl, true);
+
+    // call send with no params as they were passed in on the url string
+    xmlHttp.send(null);
+
+    return;
+}
+
+// callback for the top 8 GIFs of search
+function tenorCallback_search(responsetext)
+{
+    // parse the json response
+    var response_objects = JSON.parse(responsetext);
+
+    top_10_gifs = response_objects["results"];
+
+    // load the GIFs -- for our example we will load the first GIFs preview size (nanogif) and share size (tinygif)
+
+    document.getElementById("preview_gif").src = top_10_gifs[0]["media"][0]["nanogif"]["url"];
+
+    document.getElementById("share_gif").src = top_10_gifs[0]["media"][0]["tinygif"]["url"];
+
+    return;
+
+}
+
+
+// function to call the trending and category endpoints
+function grab_data()
+{
+    // set the apikey and limit
+    var apikey = "4Y4BNUYQEQZQ";
+    var lmt = 2;
+
+    // test search term
+    var search_term =document.getElementById("search_term").value;
+
+    // using default locale of en_US
+    var search_url = "https://g.tenor.com/v1/search?q=" + search_term + "&key=" +
+            apikey + "&limit=" + lmt;
+
+    httpGetAsync(search_url,tenorCallback_search);
+
+    // data will be loaded by each call's callback
+    return;
+}
+
+
+// SUPPORT FUNCTIONS ABOVE
+// MAIN BELOW
+
+// start the flow
+//grab_data();
+
+</script>
+
+</head>
+<body>
+<ul class="nav-bar">
+<img class="api" src="api2.jpg">
+<li id="a"><a href="tenor.html">TENOR API</a></li>
+<li id="b"><a href="news.html">NEWS API</a></li>
+</ul>
+
+<div class="container2">
+<p>Web service app for tenor API.
+	An application programming interface is a way for two or more programs to  communicate with each other. it 
+is a type of software interface, offering a service to other pieces of software.	
+</p>
+
+</div>
+<div class="container">
+
+
+<form>
+
+<input type="text" placeholder="search for gifs" class="text" id="search_term">
+<input type="button" value="search" onclick="grab_data()">
+
+
+
+</form>
+
+<img id="preview_gif" src="" alt="">
+</div>
+
+</body>
+</html>
